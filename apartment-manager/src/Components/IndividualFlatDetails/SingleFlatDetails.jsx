@@ -22,7 +22,8 @@ const SingleFlatDetails = () => {
     }, [])
 
     const getSingleFlatDetails = () => {
-        axios.get(`http://localhost:4040/flat/${flat_id}`).then(({ data }) => {
+        // axios.get(`http://localhost:4040/flat/${flat_id}`).then(({ data }) => {
+        axios.get(`https://safe-woodland-51614.herokuapp.com/flat/${flat_id}`).then(({ data }) => {
             // console.log('data:', data.resident_id)
             const { resident_id } = data
             console.log('resident_id:', resident_id)
@@ -32,11 +33,12 @@ const SingleFlatDetails = () => {
 
     return (
         <div>
+            <h2>Resident Details</h2>
             <table className="table m-auto w-50">
                 <thead>
                     <tr>
                         <th scope="col">Sr No</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">Resident Name</th>
                         <th scope="col">Gender</th>
                         <th scope="col">Age</th>
                     </tr>

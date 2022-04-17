@@ -28,7 +28,8 @@ const HomePage = () => {
   }, [])
 
   const gotAllFlatDetails = () => {
-    axios.get(`http://localhost:4040/flat`).then(({ data }) => {
+    // axios.get(`http://localhost:4040/flat`).then(({ data }) => {
+    axios.get(`https://safe-woodland-51614.herokuapp.com/flat`).then(({ data }) => {
       console.log('data:', data)
       dispatch(flatDetails(data))
     })
@@ -39,7 +40,7 @@ const HomePage = () => {
     <div>
       <h2>Flat Details</h2>
       {/* table-striped table-hover */}
-      <table className="table  w-50 m-auto" >
+      <table className="table  w-50 m-auto table-striped table-hover" >
         <thead>
           <tr>
             <th scope="col">Sr no</th>

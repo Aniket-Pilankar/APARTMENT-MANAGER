@@ -28,7 +28,8 @@ const SignUp = () => {
   const postSignUpData = async(data) => {
     console.log('data:', data)
     try {
-      let res = await fetch(`http://localhost:4040/register`,{
+      // let res = await fetch(`http://localhost:4040/register`,{
+      let res = await fetch(`https://safe-woodland-51614.herokuapp.com/register`,{
         method:'POST',
         body:data,
         headers:{
@@ -68,6 +69,7 @@ const SignUp = () => {
 
   return (
     <div className='w-25 p-3 m-auto'>
+      <h2>SignUp</h2>
       <form onSubmit={signUp_handleOn_submit} >
         <div className="mb-3 ">
           <label htmlFor="signUp-name" className="form-label">Enter Your Name</label>
