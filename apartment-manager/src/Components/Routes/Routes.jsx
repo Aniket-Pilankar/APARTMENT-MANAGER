@@ -1,5 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import AddFlats from '../AddFlats/AddFlats'
+import AddResident from '../AddResident/AddResident'
 import HomePage from '../HomePage/HomePage'
 import SingleFlatDetails from '../IndividualFlatDetails/SingleFlatDetails'
 import Login from '../Login/Login'
@@ -15,6 +17,8 @@ const AllRoutes = () => {
             <Route path='/signup' element={<SignUp/>}/>
             <Route path='/login' element={<Login/>}/>
             <Route path='/flatDetails/:id' element={<SingleFlatDetails/>}/>
+            <Route path='/addFlats' element={<AddFlats/>}/>
+            <Route path='/addresident/:flatId' element={<AddResident/>}/>
         </Routes>
         
     </div>
