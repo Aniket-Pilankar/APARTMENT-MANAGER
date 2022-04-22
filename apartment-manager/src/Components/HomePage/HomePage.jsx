@@ -15,7 +15,7 @@ const HomePage = () => {
   console.log('sortFlatNo:', sortFlatNo)
 
   const addpage = (val) => {
-    if (page + val > 1 && page + val <= flat_totalPage + 1) {
+    if (page + val > 1 && page + val <= flat_totalPage + 2) {
       setpage(val)
     }
   }
