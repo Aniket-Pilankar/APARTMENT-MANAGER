@@ -1,9 +1,10 @@
-import { AUTH_STATE , LOGIN_TOKEN } from "./action";
+import { AUTH_STATE , LOGIN_TOKEN ,LOGIN_DATA } from "./action";
 
 const initState = {
     
     authState: JSON.parse(localStorage.getItem('authState')) ||false,
-    token: JSON.parse(localStorage.getItem('logintoken'))  || null
+    token: JSON.parse(localStorage.getItem('logintoken'))  || null,
+    // userData:{}
 }
 
 export const loginReducer = (store=initState,{type,payload}) => {
@@ -16,6 +17,8 @@ export const loginReducer = (store=initState,{type,payload}) => {
             localStorage.setItem('logintoken',JSON.stringify(payload))
             return {...store,token:payload}
         
+        // case LOGIN_DATA:
+        //     return {...store,userData:payload}
          default:
             return store
     }

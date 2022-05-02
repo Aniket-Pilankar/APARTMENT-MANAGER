@@ -27,12 +27,15 @@ const HomePage = () => {
 
   const dispatch = useDispatch()
   const flat_details = useSelector((store) => (store.flatInfo.flatAllDetails)) || []
-  console.log('flat_details:', flat_details)
+  // console.log('flat_details:', flat_details)
   const flat_totalPage = useSelector((store) => (store.flatInfo.flat_totalPages)) || 0
-  console.log('flat_totalPage:', flat_totalPage)
+  // console.log('flat_totalPage:', flat_totalPage)
 
 
-  // const authState_form_store = useSelector((store) => (store.login.authState))
+  const authState_form_store = useSelector((store) => (store.login.authState))
+  console.log('authState_form_store:', authState_form_store)
+  const token_form_store = useSelector((store) => (store.login.token))
+  console.log('token_form_store:', token_form_store)
 
   // if(!authState_form_store){
   //   return <Navigate to={'/login'}/>
@@ -110,7 +113,7 @@ const HomePage = () => {
             <th scope="col">Flat No</th>
             <th scope="col">Number of Resident</th>
             <th scope="col">Resident Details</th>
-            <th scope="col">Add Resident</th>
+            {authState_form_store ? <th scope="col">Add Resident</th> : null}
 
           </tr>
         </thead>
@@ -129,11 +132,19 @@ const HomePage = () => {
                   <button type="button" className="btn btn-info">Info</button>
                 </Link>
               </td>
-              <td>
+              {/* <td>
                 <Link to={`/addresident/${e._id}`}>
                   <button type="button" className="btn btn-info">Add</button>
                 </Link>
-              </td>
+              </td> */}
+            { authState_form_store ? 
+            (
+              <td>
+              <Link to={`/addresident/${e._id}`}>
+                <button type="button" className="btn btn-warning">Add</button>
+              </Link>
+            </td>
+            ) : null}
             </tr>
 
           ))}

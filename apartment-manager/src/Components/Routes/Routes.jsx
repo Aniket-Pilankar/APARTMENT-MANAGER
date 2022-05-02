@@ -6,6 +6,7 @@ import HomePage from '../HomePage/HomePage'
 import SingleFlatDetails from '../IndividualFlatDetails/SingleFlatDetails'
 import Login from '../Login/Login'
 import Navbar from '../Navbar/Navbar'
+import NotFound from '../NotFound/NotFound'
 import SignUp from '../SignUp/SignUp'
 
 const AllRoutes = () => {
@@ -19,6 +20,8 @@ const AllRoutes = () => {
             <Route path='/flatDetails/:id' element={<SingleFlatDetails/>}/>
             <Route path='/addFlats' element={<AddFlats/>}/>
             <Route path='/addresident/:flatId' element={<AddResident/>}/>
+            <Route path='*' element={<NotFound/>}/>
+            
         </Routes>
         
     </div>

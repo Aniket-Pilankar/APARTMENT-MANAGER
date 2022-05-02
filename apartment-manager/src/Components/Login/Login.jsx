@@ -29,7 +29,7 @@ const Login = () => {
     axios.post(`https://safe-woodland-51614.herokuapp.com/login`,data).then((res) => {
       // console.log('res:', res)
       const {data} = res
-      console.log('data:', data)
+      // console.log('dataLogin:', data)
 
       dispatch(authState(true))
       dispatch(loginToken(data))
