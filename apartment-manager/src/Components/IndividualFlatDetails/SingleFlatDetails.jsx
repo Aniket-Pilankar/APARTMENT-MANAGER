@@ -67,7 +67,7 @@ const SingleFlatDetails = () => {
         // }).then(() => {
         //     getSingleFlatDetails()
         // })
-        let res = await fetch(`http://localhost:4040/flat/${flat_id}`, {
+        let res = await fetch(`https://safe-woodland-51614.herokuapp.com/flat/${flat_id}`, {
             method: "PATCH",
             body: JSON.stringify({ resident_id: all_resident_id }),
             headers: {
