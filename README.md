@@ -8,6 +8,29 @@ Apartment-Manager is the website to store & manage the data of the resident livi
 ##  The Backend Part of the Project
 [APARTMENT-MANAGER---Backend](https://github.com/Aniket-Pilankar/APARTMENT-MANAGER---Backend)
 
+### Home page (If not Logged In)
+![AppartmentManager-webite](https://github.com/Aniket-Pilankar/APARTMENT-MANAGER/blob/main/apartment-manager/Apartment_Manager_Images/1.jpg)
+
+### Sign Up page 
+![AppartmentManager-webite](https://github.com/Aniket-Pilankar/APARTMENT-MANAGER/blob/main/apartment-manager/Apartment_Manager_Images/2.jpg)
+
+### Login page 
+![AppartmentManager-webite](https://github.com/Aniket-Pilankar/APARTMENT-MANAGER/blob/main/apartment-manager/Apartment_Manager_Images/3.jpg)
+
+### Home page (When Logged In)
+![AppartmentManager-webite](https://github.com/Aniket-Pilankar/APARTMENT-MANAGER/blob/main/apartment-manager/Apartment_Manager_Images/4.jpg)
+
+### Add Flat page 
+![AppartmentManager-webite](https://github.com/Aniket-Pilankar/APARTMENT-MANAGER/blob/main/apartment-manager/Apartment_Manager_Images/5.jpg)
+
+### Add Resident page  
+![AppartmentManager-webite](https://github.com/Aniket-Pilankar/APARTMENT-MANAGER/blob/main/apartment-manager/Apartment_Manager_Images/6.jpg)
+
+### Resident Details page 
+![AppartmentManager-webite](https://github.com/Aniket-Pilankar/APARTMENT-MANAGER/blob/main/apartment-manager/Apartment_Manager_Images/7.jpg)
+
+### Page Not Found page 
+![AppartmentManager-webite](https://github.com/Aniket-Pilankar/APARTMENT-MANAGER/blob/main/apartment-manager/Apartment_Manager_Images/8.jpg)
 
 
 ## Deployment
