@@ -5,7 +5,7 @@ Apartment-Manager is the website to store & manage the data of the resident livi
  
 
 
-## The Backend Part of the Project
+## For Backend Part of the Project click on below link
 ## [APARTMENT-MANAGER---Backend](https://github.com/Aniket-Pilankar/APARTMENT-MANAGER---Backend)
 
 ### Home page (If not Logged In)
