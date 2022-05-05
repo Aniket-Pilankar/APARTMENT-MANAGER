@@ -6,13 +6,15 @@ import { useDispatch } from 'react-redux';
 import { flatDetails, flatTotalPages } from '../../Redux/2.FlatDetails/action';
 
 const HomePage = () => {
-  // console.log('useDispatch:', useDispatch)
+  
+  let srCount = 1
+
   const [page, setpage] = useState(1);
-  console.log('page:', page)
+  // console.log('page:', page)
   const [size, setsize] = useState(5);
 
   const [sortFlatNo, setsortFlatNo] = useState(null)
-  console.log('sortFlatNo:', sortFlatNo)
+  // console.log('sortFlatNo:', sortFlatNo)
 
   const addpage = (val) => {
     if (page + val > 1 && page + val <= flat_totalPage + 2) {
@@ -33,9 +35,9 @@ const HomePage = () => {
 
 
   const authState_form_store = useSelector((store) => (store.login.authState))
-  console.log('authState_form_store:', authState_form_store)
+  // console.log('authState_form_store:', authState_form_store)
   const token_form_store = useSelector((store) => (store.login.token))
-  console.log('token_form_store:', token_form_store)
+  // console.log('token_form_store:', token_form_store)
 
   // if(!authState_form_store){
   //   return <Navigate to={'/login'}/>
@@ -59,7 +61,7 @@ const HomePage = () => {
   const sort_flatNo_handleOnchange = (e) => {
     // setsortFlatNo(e.target.value)
     let sortValue = e.target.value
-    console.log('sortValue:', sortValue)
+    // console.log('sortValue:', sortValue)
     setpage(1)
     axios.get(`https://safe-woodland-51614.herokuapp.com/flat/sortBy/${sortValue}?page=${page}&size=${size}`).then(({data}) => {
       console.log('pageaftersort:', page)
@@ -123,6 +125,7 @@ const HomePage = () => {
 
             <tr key={e._id}>
               <td>{i + 1}</td>
+              {/* <td>{srCount++}</td> */}
               <td>{e.ownerType}</td>
               <td>{e.Block}</td>
               <td>{e.BlockNo}</td>

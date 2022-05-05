@@ -7,13 +7,13 @@ import { authState,loginToken } from '../../Redux/LoginSignUp/action'
 const Navbar = () => {
 
     const authState_from_store = useSelector((store) => store.login.token)
-    console.log('authState_from_storeNavbar:', authState_from_store)
+    // console.log('authState_from_storeNavbar:', authState_from_store)
     const dispatch = useDispatch()
 
 
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light " >
                 <div className="container-fluid">
                     <Link to={'/'} className="navbar-brand">APARTMENT MANAGER</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

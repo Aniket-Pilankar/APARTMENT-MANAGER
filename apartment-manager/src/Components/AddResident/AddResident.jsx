@@ -10,11 +10,12 @@ const AddResident = () => {
     
     useEffect(()=> {
         getFlat()
+        console.log('residentId:', residentId)
     },[])
     
     const getFlat = () => {
         axios.get(`https://safe-woodland-51614.herokuapp.com/flat/${flatID}`).then(({data})=> {
-            console.log('data:', data)
+            // console.log('data:', data)
             let abc = data.resident_id
             console.log('abc:', abc)
             // setresidentId([...data.resident_id])
@@ -23,16 +24,17 @@ const AddResident = () => {
                 arr.push(abc[i]._id)
                 // setresidentId([...residentId,abc[i]._id])
             }
-            setresidentId([...residentId,...arr])
+            // setresidentId([...residentId,...arr])
+            setresidentId([...arr])
         })
     }
-    console.log('residentId:', residentId)
+    // console.log('residentId:', residentId)
 
     
     const flatId = useParams()
     // console.log('flatId:', flatId.flatId)
     const [flatID, setflatID] = useState(flatId.flatId || 0)
-    console.log('flatID:', flatID)
+    // console.log('flatID:', flatID)
     
     const addResident_handleOn_submit = (e) => {
         e.preventDefault()
@@ -40,13 +42,17 @@ const AddResident = () => {
         axios.post(`https://safe-woodland-51614.herokuapp.com/resident`, create_newResident).then(({data}) => {
             console.log('data:', data._id)
             
+            // setresidentId([...residentId,data._id])++
+            // console.log('residentId80:', residentId)++
+            let new_arr = [...residentId,data._id]
+            console.log('new_arr:', new_arr)
             setresidentId([...residentId,data._id])
-            console.log('residentId80:', residentId)
             
             // showAlert()
             alert('New resident Added')
             
-            let obj = {resident_id:residentId}
+            // let obj = {resident_id:residentId}++
+            let obj = {resident_id:new_arr}
     
             
             axios.patch(`https://safe-woodland-51614.herokuapp.com/flat/${flatID}`,obj).then((res) => {

@@ -12,9 +12,9 @@ const SingleFlatDetails = () => {
 
     const dispatch = useDispatch()
     const resident_list = useSelector((store) => store.residentInfo.resident)
-    console.log('resident_list:', resident_list)
+    // console.log('resident_list:', resident_list)
     const authState_form_store = useSelector((store) => (store.login.authState))
-    console.log('authState_form_store:', authState_form_store)
+    // console.log('authState_form_store:', authState_form_store)
 
     const [all_resident_id, setallResident_id] = useState([])
     console.log('all_resident_id000:', all_resident_id)
@@ -45,21 +45,22 @@ const SingleFlatDetails = () => {
         })
     }
 
-    const resident_handleDelete = (residentId) => {
+    const resident_handleDelete = async(residentId) => {
         // console.log('residentId:', residentId)
 
         let new_list = all_resident_id.filter((e) => {
             return e !== residentId
         })
         console.log(new_list)
-        setallResident_id(new_list)
+        // setallResident_id(new_list)++
         // all_resident_id.splice(0,1)
         // console.log('all_resident_id123:', all_resident_id)
-        do_patch()
+        // do_patch()++
+        do_patch(new_list)
         console.log("1");
     }
 
-    const do_patch = async () => {
+    const do_patch = async (new_list) => {
         // let obj = {resident_id:all_resident_id}
         // axios.patch(`http://localhost:4040/flat/${flat_id}`,obj).then((res) => {
         //     console.log('res:', res)
@@ -69,7 +70,7 @@ const SingleFlatDetails = () => {
         // })
         let res = await fetch(`https://safe-woodland-51614.herokuapp.com/flat/${flat_id}`, {
             method: "PATCH",
-            body: JSON.stringify({ resident_id: all_resident_id }),
+            body: JSON.stringify({ resident_id: new_list }),
             headers: {
                 "content-type": "application/json"
             }
@@ -84,7 +85,7 @@ const SingleFlatDetails = () => {
 
         // dispatch(flatDetails(resident_id))
     }
-    console.log('all_resident_id123:', all_resident_id)
+    // console.log('all_resident_id123:', all_resident_id)
 
     if (resident_list.length === 0) {
         return <h1>Nothing to show</h1>
