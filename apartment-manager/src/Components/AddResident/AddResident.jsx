@@ -7,20 +7,20 @@ const AddResident = () => {
     const [create_newResident, setCreate_newResident] = useState({})
 
     const [residentId, setresidentId] = useState([])
-    
-    useEffect(()=> {
+
+    useEffect(() => {
         getFlat()
         console.log('residentId:', residentId)
-    },[])
-    
+    }, [])
+
     const getFlat = () => {
-        axios.get(`https://safe-woodland-51614.herokuapp.com/flat/${flatID}`).then(({data})=> {
+        axios.get(`https://appartment-manager-backend.onrender.com/flat/${flatID}`).then(({ data }) => {
             // console.log('data:', data)
             let abc = data.resident_id
             console.log('abc:', abc)
             // setresidentId([...data.resident_id])
             let arr = []
-            for(let i = 0; i < abc.length; i ++){
+            for (let i = 0; i < abc.length; i++) {
                 arr.push(abc[i]._id)
                 // setresidentId([...residentId,abc[i]._id])
             }
@@ -30,36 +30,36 @@ const AddResident = () => {
     }
     // console.log('residentId:', residentId)
 
-    
+
     const flatId = useParams()
     // console.log('flatId:', flatId.flatId)
     const [flatID, setflatID] = useState(flatId.flatId || 0)
     // console.log('flatID:', flatID)
-    
+
     const addResident_handleOn_submit = (e) => {
         e.preventDefault()
         console.log('create_newResident:', create_newResident)
-        axios.post(`https://safe-woodland-51614.herokuapp.com/resident`, create_newResident).then(({data}) => {
+        axios.post(`https://appartment-manager-backend.onrender.com/resident`, create_newResident).then(({ data }) => {
             console.log('data:', data._id)
-            
+
             // setresidentId([...residentId,data._id])++
             // console.log('residentId80:', residentId)++
-            let new_arr = [...residentId,data._id]
+            let new_arr = [...residentId, data._id]
             console.log('new_arr:', new_arr)
-            setresidentId([...residentId,data._id])
-            
+            setresidentId([...residentId, data._id])
+
             // showAlert()
             alert('New resident Added')
-            
+
             // let obj = {resident_id:residentId}++
-            let obj = {resident_id:new_arr}
-    
-            
-            axios.patch(`https://safe-woodland-51614.herokuapp.com/flat/${flatID}`,obj).then((res) => {
-            // axios.patch(`http://localhost:4040/flat/${flatID}`,obj).then((res) => {
+            let obj = { resident_id: new_arr }
+
+
+            axios.patch(`https://appartment-manager-backend.onrender.com/flat/${flatID}`, obj).then((res) => {
+                // axios.patch(`http://localhost:4040/flat/${flatID}`,obj).then((res) => {
                 console.log('reso90:', res)
                 // console.log('flat897:', data._id)
-            }).catch((error)=>{
+            }).catch((error) => {
                 console.log('error in addResident_handleOn_submit', error.message);
             })
             console.log('residentId:', residentId)
@@ -67,7 +67,7 @@ const AddResident = () => {
         }).catch((error) => {
             console.log('error in addResident_handleOn_submit', error.message);
         })
-        
+
 
         // let res = fetch(`https://safe-woodland-51614.herokuapp.com/flat/${flatId}`,{
         //     method:'PATCH',
@@ -76,7 +76,7 @@ const AddResident = () => {
         //         'Content-Type':'application/json'
         //     }
         // })
-        
+
     }
 
 

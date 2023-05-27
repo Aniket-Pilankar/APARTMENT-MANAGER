@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { flatDetails, flatTotalPages } from '../../Redux/2.FlatDetails/action';
 
 const HomePage = () => {
-  
+
   let srCount = 1
 
   const [page, setpage] = useState(1);
@@ -25,7 +25,7 @@ const HomePage = () => {
 
 
 
-  
+
 
   const dispatch = useDispatch()
   const flat_details = useSelector((store) => (store.flatInfo.flatAllDetails)) || []
@@ -51,7 +51,7 @@ const HomePage = () => {
   const gotAllFlatDetails = () => {
     // axios.get(`http://localhost:4040/flat`).then(({ data }) => {
     // axios.get(`https://safe-woodland-51614.herokuapp.com/flat`).then(({ data }) => {
-    axios.get(`https://safe-woodland-51614.herokuapp.com/flat?page=${page}&size=${size}`).then(({ data }) => {
+    axios.get(`https://appartment-manager-backend.onrender.com/flat?page=${page}&size=${size}`).then(({ data }) => {
       console.log('data:', data)
       dispatch(flatDetails(data.flat))
       dispatch(flatTotalPages(data.totalPage))
@@ -63,7 +63,7 @@ const HomePage = () => {
     let sortValue = e.target.value
     // console.log('sortValue:', sortValue)
     setpage(1)
-    axios.get(`https://safe-woodland-51614.herokuapp.com/flat/sortBy/${sortValue}?page=${page}&size=${size}`).then(({data}) => {
+    axios.get(`https://appartment-manager-backend.onrender.com/flat/sortBy/${sortValue}?page=${page}&size=${size}`).then(({ data }) => {
       console.log('pageaftersort:', page)
       console.log('data sorted:', data)
       dispatch(flatDetails(data.flat))
@@ -91,7 +91,7 @@ const HomePage = () => {
             <option value="1">Ascending</option>
             <option value="-1">Descending</option>
           </select>
-            
+
         </form>
 
         <nav aria-label="Page navigation example m-auto">
@@ -140,14 +140,14 @@ const HomePage = () => {
                   <button type="button" className="btn btn-info">Add</button>
                 </Link>
               </td> */}
-            { authState_form_store ? 
-            (
-              <td>
-              <Link to={`/addresident/${e._id}`}>
-                <button type="button" className="btn btn-warning">Add</button>
-              </Link>
-            </td>
-            ) : null}
+              {authState_form_store ?
+                (
+                  <td>
+                    <Link to={`/addresident/${e._id}`}>
+                      <button type="button" className="btn btn-warning">Add</button>
+                    </Link>
+                  </td>
+                ) : null}
             </tr>
 
           ))}

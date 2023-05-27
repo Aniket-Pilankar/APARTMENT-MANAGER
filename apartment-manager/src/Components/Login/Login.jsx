@@ -2,22 +2,22 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { authState,loginToken } from '../../Redux/LoginSignUp/action';
+import { authState, loginToken } from '../../Redux/LoginSignUp/action';
 
 const Login = () => {
 
-  const [user_login,setuser_login] = useState({});
+  const [user_login, setuser_login] = useState({});
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  
+
   const login_handleOn_change = (e) => {
-    const {name,value} = e.target;
+    const { name, value } = e.target;
     setuser_login({
       ...user_login,
-      [name]:value
+      [name]: value
     })
   }
-  
+
   const login_handleOn_submit = (e) => {
     e.preventDefault()
     // let data = JSON.stringify(user_login)
@@ -26,9 +26,10 @@ const Login = () => {
 
   const postLoginData = (data) => {
     // axios.post(`http://localhost:4040/login`,data).then((res) => {
-    axios.post(`https://safe-woodland-51614.herokuapp.com/login`,data).then((res) => {
+    // axios.post(`https://safe-woodland-51614.herokuapp.com/login`,data).then((res) => {
+    axios.post(`https://appartment-manager-backend.onrender.com/login`, data).then((res) => {
       // console.log('res:', res)
-      const {data} = res
+      const { data } = res
       // console.log('dataLogin:', data)
 
       dispatch(authState(true))
@@ -37,12 +38,12 @@ const Login = () => {
       navigate('/')
 
 
-    }).catch((error)=>{
+    }).catch((error) => {
       alert('Please try another email or password')
       console.error(error.response.data);
 
     })
-  } 
+  }
 
   return (
     <div>
@@ -52,7 +53,7 @@ const Login = () => {
           <div className="mb-3 ">
             <label htmlFor="login-email" className="form-label">Email address</label>
             <input type="email" className="form-control" id="login-email" aria-describedby="emailHelp" name='email' onChange={login_handleOn_change} />
-            
+
           </div>
           <div className="mb-3">
             <label htmlFor="login-password" className="form-label">Password</label>

@@ -32,7 +32,7 @@ const SingleFlatDetails = () => {
 
     const getSingleFlatDetails = () => {
         // axios.get(`http://localhost:4040/flat/${flat_id}`).then(({ data }) => {
-        axios.get(`https://safe-woodland-51614.herokuapp.com/flat/${flat_id}`).then(({ data }) => {
+        axios.get(`https://appartment-manager-backend.onrender.com/flat/${flat_id}`).then(({ data }) => {
             // console.log('data:', data.resident_id)
             const { resident_id } = data
             // console.log('resident_id:', resident_id)
@@ -45,7 +45,7 @@ const SingleFlatDetails = () => {
         })
     }
 
-    const resident_handleDelete = async(residentId) => {
+    const resident_handleDelete = async (residentId) => {
         // console.log('residentId:', residentId)
 
         let new_list = all_resident_id.filter((e) => {
@@ -68,7 +68,8 @@ const SingleFlatDetails = () => {
         // }).then(() => {
         //     getSingleFlatDetails()
         // })
-        let res = await fetch(`https://safe-woodland-51614.herokuapp.com/flat/${flat_id}`, {
+        // let res = await fetch(`https://safe-woodland-51614.herokuapp.com/flat/${flat_id}`, {
+        let res = await fetch(`https://appartment-manager-backend.onrender.com/flat/${flat_id}`, {
             method: "PATCH",
             body: JSON.stringify({ resident_id: new_list }),
             headers: {
