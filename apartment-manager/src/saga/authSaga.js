@@ -1,12 +1,15 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, select, takeLatest } from "redux-saga/effects";
 import {
   checkSignupEmail,
   checkSignupEmailSuccess,
   setUserSession,
   setUserSessionSuccess,
+  tryLogin,
+  tryLoginSuccess,
 } from "../Redux/auth/action";
+import { selectAuthSession } from "../Redux/auth/selector";
 import { clearSession, setSession } from "../Redux/auth/session";
-import { checkSignupEmail as checkSignupEmailAPI } from "../utils/api";
+import { checkSignupEmail as checkSignupEmailAPI, login } from "../utils/api";
 
 function* setUserSessionWorker(action) {
   try {
@@ -29,23 +32,49 @@ function* checkSignupEmailWorker(action) {
     const {
       token,
       // eslint-disable-next-line no-unused-vars
-      user: { email, name, ...restUserData },
+      user: { email, name, _id, ...restUserData },
     } = response.data;
 
     const updatedSession = {
       token,
       email,
       name,
+      userId: _id,
     };
 
     yield put(setUserSession({ session: updatedSession }));
     yield put(checkSignupEmailSuccess(updatedSession));
+    return action.payload.res(updatedSession);
+    // return new Promise((resolve) => resolve(updatedSession));
   } catch (err) {
-    console.log("err:", err);
+    return action.payload.rej(err);
+  }
+}
+
+function* tryLoginWorker(action) {
+  try {
+    const session = yield select(selectAuthSession);
+    if (!session) return;
+
+    const result = yield call(login, action.payload);
+    console.log("result:", result);
+
+    const { token } = result;
+
+    const updatedSession = {
+      ...session,
+      token,
+    };
+
+    yield put(setUserSession({ session: updatedSession }));
+    yield put(tryLoginSuccess(updatedSession));
+  } catch (error) {
+    console.log("error:", error);
   }
 }
 
 export default function* authSaga() {
   yield takeLatest(setUserSession().type, setUserSessionWorker);
   yield takeLatest(checkSignupEmail().type, checkSignupEmailWorker);
+  yield takeLatest(tryLogin().type, tryLoginWorker);
 }
