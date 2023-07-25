@@ -47,9 +47,11 @@ const Login = () => {
   return (
     <Stack gap={3} as={"div"} className="login__root">
       <h1>Login</h1>
-      <h3>
-        Welcome <span>{session.name}</span>
-      </h3>
+      {session?.name && (
+        <h3>
+          Welcome <span>{session?.name}</span>
+        </h3>
+      )}
       <div className="w-25 p-3 m-auto">
         <form onSubmit={handleSubmit}>
           <div className="mb-3 ">

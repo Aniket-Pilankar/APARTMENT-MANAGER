@@ -1,4 +1,10 @@
-import { call, put, select, takeLatest } from "redux-saga/effects";
+import {
+  call,
+  put,
+  putResolve,
+  takeLatest,
+  takeLeading,
+} from "redux-saga/effects";
 import {
   checkSignupEmail,
   checkSignupEmailSuccess,
@@ -6,8 +12,9 @@ import {
   setUserSessionSuccess,
   tryLogin,
   tryLoginSuccess,
+  tryLogout,
+  tryLogoutSuccess,
 } from "../Redux/auth/action";
-import { selectAuthSession } from "../Redux/auth/selector";
 import { clearSession, setSession } from "../Redux/auth/session";
 import { checkSignupEmail as checkSignupEmailAPI, login } from "../utils/api";
 
@@ -27,16 +34,13 @@ function* checkSignupEmailWorker(action) {
   console.log("action:checkSignupEmailWorker", action);
   try {
     const response = yield call(checkSignupEmailAPI, action.payload);
-    console.log("response:", response);
 
     const {
-      token,
       // eslint-disable-next-line no-unused-vars
       user: { email, name, _id, ...restUserData },
     } = response.data;
 
     const updatedSession = {
-      token,
       email,
       name,
       userId: _id,
@@ -53,16 +57,17 @@ function* checkSignupEmailWorker(action) {
 
 function* tryLoginWorker(action) {
   try {
-    const session = yield select(selectAuthSession);
-    if (!session) return;
+    // const session = yield select(selectAuthSession);
+    // if (!session) return;
 
     const result = yield call(login, action.payload);
     console.log("result:", result);
 
     const { token } = result;
+    const { password, ...restUserDetails } = result.user;
 
     const updatedSession = {
-      ...session,
+      ...restUserDetails,
       token,
     };
 
@@ -74,8 +79,18 @@ function* tryLoginWorker(action) {
   }
 }
 
+function* tryLogoutWorker() {
+  try {
+    yield putResolve(tryLogoutSuccess());
+    yield put(setUserSession({ session: null }));
+  } catch (error) {
+    console.log("error:", error);
+  }
+}
+
 export default function* authSaga() {
   yield takeLatest(setUserSession().type, setUserSessionWorker);
   yield takeLatest(checkSignupEmail().type, checkSignupEmailWorker);
   yield takeLatest(tryLogin().type, tryLoginWorker);
+  yield takeLeading(tryLogout().type, tryLogoutWorker);
 }

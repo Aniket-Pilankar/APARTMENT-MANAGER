@@ -30,7 +30,6 @@ export const getSession = () => {
     if (!sessionCipher) return null;
 
     const bytes = AES.decrypt(sessionCipher, SESSION_SECRET);
-    console.log("bytes:", bytes);
     return JSON.parse(bytes.toString(utf8));
   } catch (error) {
     console.log("error:", error);

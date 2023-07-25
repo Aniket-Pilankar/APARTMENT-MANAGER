@@ -8,6 +8,9 @@ export const SET_USER_SESSION_SUCCESS = "SET_USER_SESSION_SUCCESS";
 export const TRY_LOGIN = "TRY_LOGIN";
 export const TRY_LOGIN_SUCCESS = "TRY_LOGIN_SUCCESS";
 
+export const TRY_LOGOUT = "TRY_LOGOUT";
+export const TRY_LOGOUT_SUCCESS = "TRY_LOGOUT_SUCCESS";
+
 export const setUserSession = (payload) => ({
   type: SET_USER_SESSION,
   payload,
@@ -35,4 +38,12 @@ export const tryLogin = (payload) => ({
 export const tryLoginSuccess = (payload) => ({
   type: TRY_LOGIN_SUCCESS,
   payload,
+});
+
+export const tryLogout = () => ({
+  type: TRY_LOGOUT,
+});
+
+export const tryLogoutSuccess = () => ({
+  type: TRY_LOGOUT_SUCCESS,
 });

@@ -1,4 +1,8 @@
-import { SET_USER_SESSION_SUCCESS, TRY_LOGIN_SUCCESS } from "./action";
+import {
+  SET_USER_SESSION_SUCCESS,
+  TRY_LOGIN_SUCCESS,
+  TRY_LOGOUT_SUCCESS,
+} from "./action";
 import { getSession } from "./session";
 
 const getInitialSession = () => {
@@ -6,7 +10,7 @@ const getInitialSession = () => {
 
   if (!sessionWithIsAuthenticated) return null;
 
-  const { token, password, ...userSession } = sessionWithIsAuthenticated;
+  const { password, ...userSession } = sessionWithIsAuthenticated;
   return userSession;
 };
 
@@ -29,6 +33,11 @@ export const authReducer = (state = initialState, { type, payload }) => {
           ...state.session,
           ...payload,
         },
+      };
+    case TRY_LOGOUT_SUCCESS:
+      return {
+        ...state,
+        session: null,
       };
     default:
       return state;
