@@ -1,9 +1,9 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Stack } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { authState, loginToken } from "../../Redux/LoginSignUp/action";
+import { tryLogin } from "../../Redux/auth/action";
+import { selectAuthSession } from "../../Redux/auth/selector";
 import "./styles.css";
 
 const intitalState = {
@@ -17,8 +17,7 @@ const Login = () => {
 
   const [userLoginDetails, setUserLoginDetails] = useState(intitalState);
 
-  const session = useSelector((state) => state.auth.session);
-  console.log("session:", session);
+  const session = useSelector(selectAuthSession);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,30 +27,21 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  async function getPromise() {
+    return new Promise((res, rej) =>
+      dispatch(tryLogin({ ...userLoginDetails, res, rej }))
+    );
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    postLoginData(userLoginDetails);
-  };
 
-  const postLoginData = (data) => {
-    // axios.post(`http://localhost:4040/login`,data).then((res) => {
-    // axios.post(`https://safe-woodland-51614.herokuapp.com/login`,data).then((res) => {
-    axios
-      .post(`https://appartment-manager-backend.onrender.com/login`, data)
-      .then((res) => {
-        // console.log('res:', res)
-        const { data } = res;
-        // console.log('dataLogin:', data)
+    const isLoggedInSuccessfully = await getPromise();
 
-        dispatch(authState(true));
-        dispatch(loginToken(data));
-
-        navigate("/");
-      })
-      .catch((error) => {
-        alert("Please try another email or password");
-        console.error(error.response.data);
-      });
+    if (isLoggedInSuccessfully) {
+      setUserLoginDetails(intitalState);
+      navigate("/");
+    }
   };
 
   return (

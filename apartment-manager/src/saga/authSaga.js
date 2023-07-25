@@ -68,6 +68,7 @@ function* tryLoginWorker(action) {
 
     yield put(setUserSession({ session: updatedSession }));
     yield put(tryLoginSuccess(updatedSession));
+    return action.payload.res(true);
   } catch (error) {
     console.log("error:", error);
   }
