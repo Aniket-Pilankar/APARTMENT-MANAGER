@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Stack } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { tryLogin } from "../../Redux/auth/action";
-import { selectAuthSession } from "../../Redux/auth/selector";
+import { selectAuthSession } from "../../db/auth/selector";
+import { tryLogin } from "../../db/auth/action";
 import "./styles.css";
 
 const intitalState = {

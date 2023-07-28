@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { checkSignupEmail } from "../../Redux/auth/action";
+import { checkSignupEmail } from "../../db/auth/action";
 import { urls } from "../../utils/urls";
 
 const initialState = {

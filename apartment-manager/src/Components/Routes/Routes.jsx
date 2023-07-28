@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import AddFlats from "../AddFlats/AddFlats";
 import AddResident from "../AddResident/AddResident";
-import HomePage from "../HomePage/HomePage";
+import HomePage from "../HomePage";
 import SingleFlatDetails from "../IndividualFlatDetails/SingleFlatDetails";
 import Login from "../Login/Login";
 import Navbar from "../Navbar/Navbar";

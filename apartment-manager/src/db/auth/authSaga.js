@@ -14,9 +14,12 @@ import {
   tryLoginSuccess,
   tryLogout,
   tryLogoutSuccess,
-} from "../Redux/auth/action";
-import { clearSession, setSession } from "../Redux/auth/session";
-import { checkSignupEmail as checkSignupEmailAPI, login } from "../utils/api";
+} from "./action";
+import { clearSession, setSession } from "./session";
+import {
+  checkSignupEmail as checkSignupEmailAPI,
+  login,
+} from "./api";
 
 function* setUserSessionWorker(action) {
   try {

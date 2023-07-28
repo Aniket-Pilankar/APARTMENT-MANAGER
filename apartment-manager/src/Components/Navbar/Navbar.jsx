@@ -1,23 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { tryLogout } from "../../Redux/auth/action";
+import { tryLogout } from "../../db/auth/action";
 import { Link } from "react-router-dom";
-import { selectAuthSession } from "../../Redux/auth/selector";
-import { getSession } from "../../Redux/auth/session";
+import { selectAuthSession } from "../../db/auth/selector";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const session = useSelector(selectAuthSession);
-  console.log("session:", session);
 
   const handleUserLogout = () => {
     dispatch(tryLogout());
   };
-
-  useEffect(() => {
-    const session1 = getSession();
-    console.log("session1:", session1);
-  }, []);
 
   return (
     <div>
@@ -46,8 +39,6 @@ const Navbar = () => {
               </li>
               {session?.token ? (
                 <>
-                  {/* <li className="nav-item"> */}
-                  {/* <Link to={'/signUp'} className="nav-link" >SignUp</Link> */}
                   <button
                     type="button "
                     className="btn btn-secondary p-1"
