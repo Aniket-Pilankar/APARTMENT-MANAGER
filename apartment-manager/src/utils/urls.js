@@ -5,4 +5,6 @@ export const urls = Object.freeze({
   login: "/login",
   getAllFlats: "/flat",
   getAllFlatsSortBy: (sortBy) => `/flat/sortBy/${sortBy}`,
+  getFlatsById: (id) => `/flat/${id}`,
+  addResident: "/resident",
 });

@@ -1,11 +1,10 @@
 {
-type: "FETCH_FLAT_BY_SORT",
+type: "FETCH_RESIDENT",
 payload: {
-page: 1,
-size: 5,
-sortBy:-1
+id:'625c078035c74add65322835'
 },
-};
+}
+;
 
 <!--
   // const addpage = (val) => {

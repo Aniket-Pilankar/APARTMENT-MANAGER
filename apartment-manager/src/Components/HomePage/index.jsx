@@ -1,14 +1,13 @@
-import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { flatDetails, flatTotalPages } from "../../Redux/2.FlatDetails/action";
 import { getIsUserLoggedIn } from "./helper";
 import { selectAuthSession } from "../../db/auth/selector";
 import { selectAllFlats, selectTotalFlatPages } from "../../db/flats/selector";
 import { fetchFlatBySort, fetchFlats } from "../../db/flats/action";
 import { Button, Form } from "react-bootstrap";
+import { urls } from "../../utils/urls";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -18,19 +17,14 @@ const HomePage = () => {
   const [size, setsize] = useState(5);
   const sortByRefValue = useRef(0);
   const isPageOnceLoaded = useRef(false);
-  const [selectedValue, setSelectedValue] = useState(0);
 
   const session = useSelector(selectAuthSession);
   const { allFlats } = useSelector(selectAllFlats);
-  console.log("flats: in homepage", allFlats);
   const totalPages = useSelector(selectTotalFlatPages);
 
   const isLoggedIn = getIsUserLoggedIn(session);
 
   const handlePageNumber = (value) => {
-    // const pageNo = page + value;
-    // if (pageNo <= 0) return;
-    // if (pageNo > totalPages) return;
     setpage((prev) => prev + value);
   };
 
@@ -75,8 +69,6 @@ const HomePage = () => {
 
   const handleChange = async (e) => {
     const sortBy = e.target.value;
-    console.log("sortBy:", sortBy);
-    // setSelectedValue(sortBy);
     sortByRefValue.current = sortBy;
     setpage(1);
     await getPromise(page);
@@ -91,11 +83,6 @@ const HomePage = () => {
     [dispatch, page, size]
   );
 
-  useEffect(() => {
-    console.log("page in useEffet", page);
-    console.log("selectedValue in useEffet", selectedValue);
-  }, [page, selectedValue]);
-
   return (
     <div>
       <h2>Flat Details</h2>
@@ -103,42 +90,17 @@ const HomePage = () => {
         <nav aria-label="Page navigation example m-auto">
           <ul className="pagination">
             <li className="page-item">
-              {/* <Link
-                to={"/"}
-                className="page-link"
-                onClick={handlePageNumber(-1)}
-              >
-                Previous
-              </Link> */}
               <Button variant="primary" onClick={prevPage(-1)}>
                 Previous
               </Button>{" "}
             </li>
             <li className="page-item">
-              {/* <Link
-                to={"/"}
-                className="page-link"
-                onClick={handlePageNumber(1)}
-              >
-                Next
-              </Link> */}
               <Button variant="primary" onClick={nextPage(1)}>
                 Next
               </Button>{" "}
             </li>
           </ul>
         </nav>
-
-        {/* <form action="">
-          <select
-            className="form-select"
-            aria-label="Default select example"
-            onChange={handleChange}
-          >
-            <option value="1">Ascending</option>
-            <option value="-1">Descending</option>
-          </select>
-        </form> */}
 
         <Form.Select
           aria-label="Default select example"
@@ -180,7 +142,7 @@ const HomePage = () => {
               <td>{flat.blockWing}</td>
               <td>{flat.numberOfResident}</td>
               <td>
-                <Link to={`/flatDetails/${flat._id}`}>
+                <Link to={urls.getFlatsById(flat.id)}>
                   <button type="button" className="btn btn-info">
                     Info
                   </button>
@@ -188,7 +150,7 @@ const HomePage = () => {
               </td>
               {isLoggedIn && (
                 <td>
-                  <Link to={`/addresident/${flat._id}`}>
+                  <Link to={`/addResident/${flat.id}`}>
                     <button type="button" className="btn btn-warning">
                       Add
                     </button>

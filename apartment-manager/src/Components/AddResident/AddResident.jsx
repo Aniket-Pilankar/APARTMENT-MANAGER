@@ -1,100 +1,35 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { addResident } from "../../db/residents/action";
 import "./AddResident.css";
 
+const initialState = {
+  name: "",
+  gender: "",
+  age: "",
+};
+
 const AddResident = () => {
-  const [create_newResident, setCreate_newResident] = useState({});
+  const { flatId } = useParams();
+  const dispatch = useDispatch();
 
-  const [residentId, setresidentId] = useState([]);
+  const [newResident, setNewResident] = useState(initialState);
 
-  useEffect(() => {
-    getFlat();
-    console.log("residentId:", residentId);
-  }, []);
-
-  const getFlat = () => {
-    axios
-      .get(`https://appartment-manager-backend.onrender.com/flat/${flatID}`)
-      .then(({ data }) => {
-        // console.log('data:', data)
-        let abc = data.resident_id;
-        console.log("abc:", abc);
-        // setresidentId([...data.resident_id])
-        let arr = [];
-        for (let i = 0; i < abc.length; i++) {
-          arr.push(abc[i]._id);
-          // setresidentId([...residentId,abc[i]._id])
-        }
-        // setresidentId([...residentId,...arr])
-        setresidentId([...arr]);
-      });
-  };
-  // console.log('residentId:', residentId)
-
-  const flatId = useParams();
-  // console.log('flatId:', flatId.flatId)
-  const [flatID, setflatID] = useState(flatId.flatId || 0);
-  // console.log('flatID:', flatID)
-
-  const addResident_handleOn_submit = (e) => {
-    e.preventDefault();
-    console.log("create_newResident:", create_newResident);
-    axios
-      .post(
-        `https://appartment-manager-backend.onrender.com/resident`,
-        create_newResident
-      )
-      .then(({ data }) => {
-        console.log("data:", data._id);
-
-        // setresidentId([...residentId,data._id])++
-        // console.log('residentId80:', residentId)++
-        let new_arr = [...residentId, data._id];
-        console.log("new_arr:", new_arr);
-        setresidentId([...residentId, data._id]);
-
-        // showAlert()
-        alert("New resident Added");
-
-        // let obj = {resident_id:residentId}++
-        let obj = { resident_id: new_arr };
-
-        axios
-          .patch(
-            `https://appartment-manager-backend.onrender.com/flat/${flatID}`,
-            obj
-          )
-          .then((res) => {
-            // axios.patch(`http://localhost:4040/flat/${flatID}`,obj).then((res) => {
-            console.log("reso90:", res);
-            // console.log('flat897:', data._id)
-          })
-          .catch((error) => {
-            console.log("error in addResident_handleOn_submit", error.message);
-          });
-        console.log("residentId:", residentId);
-        // getFlat()
-      })
-      .catch((error) => {
-        console.log("error in addResident_handleOn_submit", error.message);
-      });
-
-    // let res = fetch(`https://safe-woodland-51614.herokuapp.com/flat/${flatId}`,{
-    //     method:'PATCH',
-    //     body:JSON.stringify(obj),
-    //     header:{
-    //         'Content-Type':'application/json'
-    //     }
-    // })
-  };
-
-  const addResident_handleOn_change = (e) => {
+  const handleChange = (e) => {
     const { value, name } = e.target;
-    setCreate_newResident({
-      ...create_newResident,
+    setNewResident({
+      ...newResident,
       [name]: value,
     });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(addResident({ id: flatId, body: newResident }));
+
+    setNewResident(initialState);
   };
 
   return (
@@ -102,7 +37,7 @@ const AddResident = () => {
       <div className="w-25 p-3 m-auto">
         <h1>Add Resident</h1>
 
-        <form onSubmit={addResident_handleOn_submit}>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3 ">
             <label htmlFor="addFlat-name" className="form-label ">
               Enter Resident Name
@@ -112,18 +47,14 @@ const AddResident = () => {
               className="form-control"
               id="addFlat-name"
               name="name"
-              onChange={addResident_handleOn_change}
+              onChange={handleChange}
             />
           </div>
-          {/* <div className="mb-3 ">
-                        <label htmlFor="addFlat-gender" className="form-label">Enter Resident Gender</label>
-                        <input type="text" className="form-control" id="addFlat-gender" name='gender' onChange={addResident_handleOn_change} />
-
-                    </div> */}
           <select
             className="addFlat-gender mb-3"
             name="gender"
-            onChange={addResident_handleOn_change}
+            value={newResident.gender}
+            onChange={handleChange}
           >
             <option value={""}>Choose Gender</option>
             <option value="Male">Male</option>
@@ -138,14 +69,14 @@ const AddResident = () => {
               className="form-control"
               id="addFlat-age"
               name="age"
-              onChange={addResident_handleOn_change}
+              onChange={handleChange}
             />
           </div>
 
           <input
             type="submit"
             className="btn btn-primary"
-            value={"Add Resident to the Flat list"}
+            value="Add Resident to the Flat list"
           />
         </form>
       </div>

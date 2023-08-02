@@ -1,11 +1,15 @@
-import axios from "axios";
 import request from "../../utils/request";
 import { urls } from "../../utils/urls";
 
-export const getAllFlats = async ({ page, size }) => {
-  const { data } = await request.get(urls.getAllFlats, {
-    params: { page, size },
-  });
+export const getAllFlats = async (payload) => {
+  const { data } = await request.get(
+    urls.getAllFlats,
+    payload
+      ? {
+          params: { page: payload.page, size: payload.size },
+        }
+      : undefined
+  );
   return data;
 };
 

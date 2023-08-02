@@ -1,7 +1,4 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import { loginReducer } from "./LoginSignUp/reducer";
-import { flatReducer as flatReducerDummy } from "./2.FlatDetails/reducer";
-import { residentReducer } from "./ResidentInSingleFlat/reducer";
 import { allresidentReducer } from "./AllResidentList/reducer";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "../saga/rootSaga";
@@ -12,9 +9,6 @@ import { dbReducer } from "../db/reducer";
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
-  login: loginReducer,
-  flatInfo: flatReducerDummy,
-  residentInfo: residentReducer,
   allresidentInfo: allresidentReducer,
   app: appReducer,
   auth: authReducer,
