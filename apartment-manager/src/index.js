@@ -1,11 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import reportWebVitals from './reportWebVitals';
-import { Provider as ReactProvider } from 'react-redux'
-import { store } from './Redux/store'
+import reportWebVitals from "./reportWebVitals";
+import { Provider as ReactProvider } from "react-redux";
+import { store } from "./Redux/store";
+import registerInterceptors from "./utils/request-interceptor";
+
+registerInterceptors();
+
 ReactDOM.render(
   <React.StrictMode>
     <ReactProvider store={store}>
@@ -14,7 +18,7 @@ ReactDOM.render(
       </BrowserRouter>
     </ReactProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

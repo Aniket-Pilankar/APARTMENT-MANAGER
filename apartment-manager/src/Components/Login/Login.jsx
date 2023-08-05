@@ -1,69 +1,91 @@
-import axios from 'axios';
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { authState, loginToken } from '../../Redux/LoginSignUp/action';
+import React, { useState } from "react";
+import { Stack } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { selectAuthSession } from "../../db/auth/selector";
+import { tryLogin } from "../../db/auth/action";
+import "./styles.css";
+
+const intitalState = {
+  email: "",
+  password: "",
+};
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [user_login, setuser_login] = useState({});
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const [userLoginDetails, setUserLoginDetails] = useState(intitalState);
 
-  const login_handleOn_change = (e) => {
+  const session = useSelector(selectAuthSession);
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setuser_login({
-      ...user_login,
-      [name]: value
-    })
+    setUserLoginDetails({
+      ...userLoginDetails,
+      [name]: value,
+    });
+  };
+
+  async function getPromise() {
+    return new Promise((res, rej) =>
+      dispatch(tryLogin({ ...userLoginDetails, res, rej }))
+    );
   }
 
-  const login_handleOn_submit = (e) => {
-    e.preventDefault()
-    // let data = JSON.stringify(user_login)
-    postLoginData(user_login)
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const postLoginData = (data) => {
-    // axios.post(`http://localhost:4040/login`,data).then((res) => {
-    // axios.post(`https://safe-woodland-51614.herokuapp.com/login`,data).then((res) => {
-    axios.post(`https://appartment-manager-backend.onrender.com/login`, data).then((res) => {
-      // console.log('res:', res)
-      const { data } = res
-      // console.log('dataLogin:', data)
+    const isLoggedInSuccessfully = await getPromise();
 
-      dispatch(authState(true))
-      dispatch(loginToken(data))
-
-      navigate('/')
-
-
-    }).catch((error) => {
-      alert('Please try another email or password')
-      console.error(error.response.data);
-
-    })
-  }
+    if (isLoggedInSuccessfully) {
+      setUserLoginDetails(intitalState);
+      navigate("/");
+    }
+  };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <div className='w-25 p-3 m-auto'>
-        <form onSubmit={login_handleOn_submit} >
+    <Stack gap={3} as={"div"} className="login__root">
+      <h1>Login</h1>
+      {session?.name && (
+        <h3>
+          Welcome <span>{session?.name}</span>
+        </h3>
+      )}
+      <div className="w-25 p-3 m-auto">
+        <form onSubmit={handleSubmit}>
           <div className="mb-3 ">
-            <label htmlFor="login-email" className="form-label">Email address</label>
-            <input type="email" className="form-control" id="login-email" aria-describedby="emailHelp" name='email' onChange={login_handleOn_change} />
-
+            <label htmlFor="login-email" className="form-label">
+              Email address
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="login-email"
+              aria-describedby="emailHelp"
+              name="email"
+              value={userLoginDetails.email}
+              onChange={handleChange}
+            />
           </div>
           <div className="mb-3">
-            <label htmlFor="login-password" className="form-label">Password</label>
-            <input type="password" className="form-control" id="login-password" name='password' onChange={login_handleOn_change} />
+            <label htmlFor="login-password" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              id="login-password"
+              name="password"
+              value={userLoginDetails.password}
+              onChange={handleChange}
+            />
           </div>
-          <input type="submit" className="btn btn-primary" value={'Submit'} />
+          <input type="submit" className="btn btn-primary" value={"Submit"} />
         </form>
       </div>
-    </div>
-  )
-}
+    </Stack>
+  );
+};
 
-export default Login
+export default Login;
