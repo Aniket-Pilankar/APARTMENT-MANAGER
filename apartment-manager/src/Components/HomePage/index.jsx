@@ -86,8 +86,11 @@ const HomePage = () => {
   return (
     <div>
       <h2>Flat Details</h2>
-      <div className=" mx-auto w-50 d-flex justify-content-between">
-        <nav aria-label="Page navigation example m-auto">
+      <div
+        className=" mx-auto d-flex justify-content-between"
+        style={{ width: "70%" }}
+      >
+        <div aria-label="Page navigation example m-auto">
           <ul className="pagination">
             <li className="page-item">
               <Button variant="primary" onClick={prevPage(-1)}>
@@ -100,12 +103,13 @@ const HomePage = () => {
               </Button>{" "}
             </li>
           </ul>
-        </nav>
+        </div>
 
         <Form.Select
           aria-label="Default select example"
           onChange={handleChange}
           size="sm"
+          style={{ width: "auto" }}
         >
           <option value={0} disabled={sortByRefValue.current !== 0}>
             Sort block number
@@ -114,12 +118,12 @@ const HomePage = () => {
           <option value={-1}>Descending</option>
         </Form.Select>
 
-        <nav aria-label="Page navigation example m-auto">
+        <div aria-label="Page navigation example m-auto">
           <ul className="pagination">
             <li className="page-item page-link">Total Pages</li>
             <li className="page-item page-link">{totalPages}</li>
           </ul>
-        </nav>
+        </div>
       </div>
       <table className="table  w-50 m-auto table-striped table-hover">
         <thead>

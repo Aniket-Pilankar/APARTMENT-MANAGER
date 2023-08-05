@@ -1,6 +1,8 @@
 import {
   ADD_RESIDENT,
   ADD_RESIDENT_SUCCESS,
+  FETCH_ALL_RESIDENT,
+  FETCH_ALL_RESIDENT_SUCCESS,
   FETCH_RESIDENT,
   FETCH_RESIDENT_SUCCESS,
   REMOVE_RESIDENT_FROM_FLAT,
@@ -35,4 +37,13 @@ export const addResident = (payload) => ({
 export const addResidentSuccess = (payload) => ({
   type: ADD_RESIDENT_SUCCESS,
   payload,
+});
+
+export const fetchAllResident = (payload) => ({
+  type: FETCH_ALL_RESIDENT,
+  payload,
+});
+
+export const fetchAllResidentSuccess = () => ({
+  type: FETCH_ALL_RESIDENT_SUCCESS,
 });

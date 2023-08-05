@@ -20,3 +20,8 @@ export const getAllFlatsSorted = async ({ sortBy, page, size }) => {
   });
   return data;
 };
+
+export const createFlat = async (payload) => {
+  const { data } = request.post(urls.createFlat, payload);
+  return data;
+};

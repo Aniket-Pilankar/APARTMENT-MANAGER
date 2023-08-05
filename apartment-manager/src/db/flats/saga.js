@@ -1,11 +1,17 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import {
+  createFlat,
+  createFlatSuccess,
   fetchFlatBySort,
   fetchFlatBySortSuccess,
   fetchFlats,
   fetchFlatSuccess,
 } from "./action";
-import { getAllFlats, getAllFlatsSorted } from "./api";
+import {
+  getAllFlats,
+  getAllFlatsSorted,
+  createFlat as createFlatAPI,
+} from "./api";
 
 function* fetchFlatsWorkers(action) {
   try {
@@ -26,7 +32,19 @@ function* fetchFlatBySortWorkers(action) {
   }
 }
 
+function* createFlatWorkers(action) {
+  try {
+    const { res, ...obj } = action.payload;
+    const result = yield call(createFlatAPI, obj);
+    yield put(createFlatSuccess(result));
+    return res(result);
+  } catch (error) {
+    console.log("error:", error);
+  }
+}
+
 export function* flatSaga() {
   yield takeLatest(fetchFlats().type, fetchFlatsWorkers);
   yield takeLatest(fetchFlatBySort().type, fetchFlatBySortWorkers);
+  yield takeLatest(createFlat().type, createFlatWorkers);
 }

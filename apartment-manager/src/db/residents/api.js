@@ -17,3 +17,8 @@ export const addResident = async (payload) => {
   const { data } = await request.post(urls.addResident, payload);
   return data;
 };
+
+export const getAllResident = async () => {
+  const { data } = await request.get(urls.addResident);
+  return data;
+};

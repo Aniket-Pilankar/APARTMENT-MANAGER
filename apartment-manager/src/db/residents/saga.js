@@ -2,6 +2,8 @@ import { call, put, putResolve, select, takeLatest } from "redux-saga/effects";
 import {
   addResident,
   addResidentSuccess,
+  fetchAllResident,
+  fetchAllResidentSuccess,
   fetchFlatDetails,
   fetchFlatDetailsSuccess,
   removeResidentFromFlat,
@@ -15,6 +17,7 @@ import {
   updateResidentFromFlat as removeResidentFromFlatAPI,
   addResident as addResidentAPI,
   updateResidentFromFlat,
+  getAllResident,
 } from "./api";
 import { getResident } from "./helper";
 import { selectResident } from "./selector";
@@ -57,8 +60,22 @@ function* addResidentWorker(action) {
   }
 }
 
+function* fetchAllResidentWorker(action) {
+
+  console.log('action.payload',action.payload)
+  try {
+    const result = yield call(getAllResident);
+    console.log('result: fetchAllResidentWorker', result)
+    yield put(fetchAllResidentSuccess(result));
+    return action.payload.res(result);
+  } catch (error) {
+    console.log("error:", error);
+  }
+}
+
 export function* residentSaga() {
   yield takeLatest(fetchFlatDetails().type, fetchResidentWorker);
   yield takeLatest(addResident().type, addResidentWorker);
   yield takeLatest(removeResidentFromFlat().type, removeResidentFromFlatWorker);
+  yield takeLatest(fetchAllResident().type, fetchAllResidentWorker);
 }

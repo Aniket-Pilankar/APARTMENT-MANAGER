@@ -7,4 +7,5 @@ export const urls = Object.freeze({
   getAllFlatsSortBy: (sortBy) => `/flat/sortBy/${sortBy}`,
   getFlatsById: (id) => `/flat/${id}`,
   addResident: "/resident",
+  createFlat: "/flat",
 });
